@@ -5,6 +5,6 @@ interviews/
 other/stuff.py
 
 
-tester1.py/
-tester2.py/
-tester3.py/
+tester1.py
+tester2.py
+tester3.py
