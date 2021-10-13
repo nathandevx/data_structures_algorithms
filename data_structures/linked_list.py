@@ -8,6 +8,9 @@ class Node:
 		self.data = data
 		self.next = None
 
+	def __str__(self):
+		return f'{self.data}'
+
 
 class LinkedList:
 	def __init__(self):
@@ -42,7 +45,7 @@ class LinkedList:
 		if not cur:
 			self.head = new_node
 			return
-		while cur.next:
+		while cur.next:  # when there's not something next, break the loop and make that next the new node
 			cur = cur.next
 		cur.next = new_node  # the next node (nonexistent) is equal to the new node
 
@@ -64,57 +67,54 @@ class LinkedList:
 			counter += 1
 			cur = cur.next
 
+	def remove_first(self):
+		self.head = self.head.next
+
 	def remove_last(self):
-		prev = None
 		cur = self.head
-		while cur.next is not None:
+		prev = None
+		while cur.next:
 			prev = cur
 			cur = cur.next
+		prev.next = None
 
-	def remove(self, position):  # delete element at given position
-		if self.head is None:
+	def remove(self, pos):
+		cur = self.head
+		if pos < 1:
+			print("Use remove_first() method")
 			return
-		temp = self.head
-		if position == 0:
-			self.head = temp.next
-			temp = None
-			return
+		counter = 1
+		while cur:
+			if counter == pos:
+				cur.next = cur.next.next
+				return
+			counter += 1
+			cur = cur.next
+		return cur
 
-		# Find the key to be deleted
-		for i in range(position - 1):
-			temp = temp.next
-			if temp is None:
-				break
-
-		# If the key is not present
-		if temp is None:
-			return
-		if temp.next is None:
-			return
-
-		next = temp.next.next
-		temp.next = None
-		temp.next = next
-
-	def search(self, key):
-		current = self.head
-		while current is not None:
-			if current.data == key:
+	def search(self, item):
+		cur = self.head
+		while cur:
+			if cur.data == item:
 				return True
-			current = current.next
+			cur = cur.next
 		return False
 
-	def reverse(self):  # reverse list
+	def reverse(self):
 		prev = None
-		current = self.head
-		while current is not None:
-			next = current.next
-			current.next = prev
-			prev = current
-			current = next
-		self.head = prev
+		cur = self.head
+		while cur:
+			temp = cur
+			cur.next, cur = cur, prev
+			prev = temp
+			cur = cur.next
+			# next = cur.next
+			# cur.next = prev
+			# prev = cur
+			# cur = next
+		# self.head = prev
 
-	def sort(self, head):  # sort list
+	def sort(self, head):
 		current = head
 		index = Node(None)
 
@@ -132,10 +132,10 @@ class LinkedList:
 					index = index.next
 				current = current.next
 
-	def is_sorted(self):  # is list sorted?
+	def is_sorted(self):
 		cur = self.head
-		while None not in [cur, cur.next]:
-			if cur.next is not None:
+		while cur:
+			if cur.next:  # is there a next node
 				if cur.data > cur.next.data:
 					return False
 			cur = cur.next
@@ -146,11 +146,10 @@ if __name__ == '__main__':
 	linked_list = LinkedList()
 	linked_list.head = Node(1)
 	linked_list.head.next = Node(2)
-	linked_list.head.next.next = Node(5)
-	linked_list.head.next.next.next = Node(7)
+	linked_list.head.next.next = Node(3)
+	linked_list.head.next.next.next = Node(4)
 
 	linked_list.display()
 	print()
-	linked_list.insert(4, 2)
-	linked_list.insert_end(8)
+	linked_list.reverse()
 	linked_list.display()
