@@ -44,7 +44,7 @@ class LinkedList:
 			return
 		while cur.next:
 			cur = cur.next
-		cur.next = new_node
+		cur.next = new_node  # the next node (nonexistent) is equal to the new node
 
 	def insert_after(self, prev_node, new_data):
 		new_node = Node(new_data)
@@ -56,7 +56,7 @@ class LinkedList:
 			return
 		new_node = Node(new_data)
 		cur = self.head
-		counter = 0
+		counter = 1
 		while cur:
 			if counter == pos:
 				new_node.next, cur.next = cur.next, new_node
@@ -151,5 +151,6 @@ if __name__ == '__main__':
 
 	linked_list.display()
 	print()
-	linked_list.insert(4, 0)
+	linked_list.insert(4, 2)
+	linked_list.insert_end(8)
 	linked_list.display()
