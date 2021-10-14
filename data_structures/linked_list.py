@@ -104,15 +104,17 @@ class LinkedList:
 		prev = None
 		cur = self.head
 		while cur:
-			temp = cur
-			cur.next, cur = cur, prev
-			prev = temp
-			cur = cur.next
 			# next = cur.next
-			# cur.next = prev
-			# prev = cur
+			# temp = cur
+			# if cur.next:
+			# 	cur.next, cur = cur, prev
+			# prev = temp
 			# cur = next
-		# self.head = prev
+			next = cur.next
+			cur.next = prev
+			prev = cur
+			cur = next
+		self.head = prev
 
 	def sort(self, head):
 		current = head
